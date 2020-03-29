@@ -13,13 +13,13 @@ class UsersApplication
         Database.add_user(new_user)
         response.write('User added successfully.')
       else
-        response.write(Database.users.to_s)
+        response.write(JSON.generate(Database.users))
       end
     elsif env['PATH_INFO'] =~ %r{\d+}
       id = env['PATH_INFO'].split('/').last.to_i
-      response.write(Database.users[id].to_s)
+      response.write(JSON.generate(Database.users[id]))
     else
-      responses.status = 404
+      response.status = 404
       response.write('Bad times!')
     end
 
