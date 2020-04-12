@@ -1,5 +1,3 @@
-require_relative 'application_helpers.rb'
-
 class HobbiesApplication
   include ApplicationHelpers
   attr_reader :request, :response

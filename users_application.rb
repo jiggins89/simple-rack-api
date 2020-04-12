@@ -1,4 +1,4 @@
-require_relative 'application_helpers.rb'
+# require_relative 'application_helpers.rb'
 
 class UsersApplication
   include ApplicationHelpers
