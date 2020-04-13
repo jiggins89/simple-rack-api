@@ -6,4 +6,12 @@ module ApplicationHelpers
     response.status = status
     response.write(message)
   end
+
+  def return_objects(objs)
+    handle_response(JSON.generate(objs))
+  end
+
+  def api_key(user)
+    user.values[0][:api_key]
+  end
 end

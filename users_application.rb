@@ -1,5 +1,3 @@
-# require_relative 'application_helpers.rb'
-
 class UsersApplication
   include ApplicationHelpers
   attr_reader :request, :response
@@ -40,17 +38,24 @@ class UsersApplication
   end
 
   def get_all_users
-    handle_response(JSON.generate(Database.users))
+    return_objects(authenticated_user)
   end
 
   def get_user
     id = request.path_info.split('/').last.to_i
-    user = Database.users[id]
-    if user.nil?
+    user = Database.users(id)
+
+    if user.empty?
       handle_response('User not found!', 404)
+    elsif api_key(user) != api_key(authenticated_user)
+      handle_response('Forbidden', 403)
     else
-      handle_response(JSON.generate(user))
+      return_objects(user)
     end
+  end
+
+  def authenticated_user
+    Database.users(request.env['app.user_id'])
   end
 
 end
